@@ -15,6 +15,18 @@
         "!.next/cache/**"
       ]
     },
+    "admin#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ],
+      "env": [
+        "API_URL"
+      ]
+    },
     "frontend#build": {
       "dependsOn": [
         "^build"
