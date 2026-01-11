@@ -1,16 +1,23 @@
 import { ThemeModeToggler } from '@/components/shared/theme-toggler';
-import { Button } from '@workspace/ui/components/button';
+import { buttonVariants } from '@workspace/ui/components/button';
+import { cn } from '@workspace/ui/lib/utils';
 import Link from 'next/link';
 
 export default function Page() {
   return (
-    <div className='flex items-center justify-center min-h-svh'>
-      <div className='flex flex-col items-center justify-center gap-4'>
-        <h1 className='text-2xl font-bold'>Admin App (Private)</h1>
-        <Button size='sm'>Button</Button>
-        <ThemeModeToggler />
-        <Link href={'/login'}>Login</Link>
-      </div>
+    <div className={'h-dvh flex flex-col gap-8 items-center justify-center'}>
+      <h1 className={'text-4xl font-bold'}>Admin Page</h1>
+      <Link
+        href='/dashboard'
+        className={cn(
+          buttonVariants({
+            className: 'rounded-full',
+            size: 'lg',
+          })
+        )}>
+        Go to Dashboard
+      </Link>
+      <ThemeModeToggler />
     </div>
   );
 }

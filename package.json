@@ -26,6 +26,9 @@
       "core-js-pure",
       "esbuild",
       "sharp"
-    ]
+    ],
+    "overrides": {
+      "csstype": "^3.2.3"
+    }
   }
 }
