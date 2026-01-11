@@ -12,7 +12,14 @@
       ],
       "outputs": [
         ".next/**",
-        "!.next/cache/**"
+        "!.next/cache/**",
+        "dist/**"
+      ],
+      "env": [
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET",
+        "DATABASE_URL",
+        "PORT"
       ]
     },
     "admin#build": {
@@ -37,6 +44,20 @@
       ],
       "env": [
         "API_URL"
+      ]
+    },
+    "backend#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "env": [
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET",
+        "DATABASE_URL",
+        "PORT"
       ]
     },
     "lint": {
