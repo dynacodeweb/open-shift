@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server';
-// import { Scalar } from '@scalar/hono-api-reference';
+import { Scalar } from '@scalar/hono-api-reference';
 import { auth } from '@workspace/auth/server';
 import { config } from 'dotenv';
 import { Hono } from 'hono';
@@ -56,25 +56,25 @@ app.get('/', async (c) => {
   // console.log(openAPISchema);
   return c.json({
     status: 'ok',
-    message: 'Welcome to the Backend API',
+    message: 'Welcome to the Open shift API',
     // openAPISchema,
   });
 });
 
-// app.get(
-//   '/docs',
-//   Scalar({
-//     pageTitle: 'Backend API Documentation',
-//     sources: [
-//       {
-//         title: 'Auth',
-//         url: '/api/auth/open-api/generate-schema',
-//       },
-//     ],
-//     isEditable: false,
-//     title: 'Backend API Reference',
-//   })
-// );
+app.get(
+  '/docs',
+  Scalar({
+    pageTitle: 'Backend API Documentation',
+    sources: [
+      {
+        title: 'Auth',
+        url: '/api/auth/open-api/generate-schema',
+      },
+    ],
+    isEditable: false,
+    title: 'Backend API Reference',
+  })
+);
 
 app.get('/session', (c) => {
   const session = c.get('session');
