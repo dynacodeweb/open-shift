@@ -51,15 +51,15 @@ app.on(['POST', 'GET'], '/api/auth/*', (c) => {
   return auth.handler(c.req.raw);
 });
 
-app.get('/', async (c) => {
-  // const openAPISchema = await auth.api.generateOpenAPISchema();
-  // console.log(openAPISchema);
-  return c.json({
-    status: 'ok',
-    message: 'Welcome to the Open shift API',
-    // openAPISchema,
-  });
-});
+// app.get('/', async (c) => {
+//   // const openAPISchema = await auth.api.generateOpenAPISchema();
+//   // console.log(openAPISchema);
+//   return c.json({
+//     status: 'ok',
+//     message: 'Welcome to the Open shift API',
+//     // openAPISchema,
+//   });
+// });
 
 app.get(
   '/docs',
