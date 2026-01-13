@@ -16,11 +16,18 @@ import {
   FieldLabel,
 } from '@workspace/ui/components/field';
 import { Input } from '@workspace/ui/components/input';
+import { toast } from '@workspace/ui/components/sonner';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   return (
     <Card className={'max-w-lg w-full h-fit gap-4 py-4'}>
@@ -33,12 +40,7 @@ export default function LoginForm() {
           <FieldGroup className={'gap-4'}>
             <Field>
               <FieldLabel htmlFor='email'>Email</FieldLabel>
-              <Input
-                id='email'
-                type='email'
-                placeholder='m@example.com'
-                required
-              />
+              <Input id='email' type='email' placeholder='m@example.com' />
             </Field>
             <Field>
               <div className='flex items-center'>
@@ -76,7 +78,20 @@ export default function LoginForm() {
               </FieldLabel>
             </Field>
             <Field>
-              <Button type='submit'>Login</Button>
+              <Button
+                type='submit'
+                onClick={() => {
+                  toast.promise(sleep(300), {
+                    loading: 'Logging your account...',
+                    success: 'Successfully logged in!',
+                    error: 'Failed to log in.',
+                  });
+                  setTimeout(() => {
+                    router.push('/dashboard');
+                  }, 250);
+                }}>
+                Login
+              </Button>
               <Button variant='outline' type='button'>
                 <Google className='size-4' />
                 Login with Google
