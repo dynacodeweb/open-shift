@@ -22,7 +22,7 @@ export default function AppSidebar({
         <NavMain />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarSeparator />
+        <SidebarSeparator className={'mx-0'} />
         <NavSecondary className='mt-auto' />
       </SidebarFooter>
       <SidebarRail />

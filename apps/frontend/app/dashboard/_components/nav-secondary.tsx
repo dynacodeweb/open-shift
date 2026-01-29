@@ -18,7 +18,7 @@ export function NavSecondary({
 }: {} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const items = dashboardData.navSecondary;
   return (
-    <SidebarGroup {...props}>
+    <SidebarGroup {...props} className={'p-0'}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (

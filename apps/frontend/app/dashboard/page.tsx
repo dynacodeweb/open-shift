@@ -31,6 +31,17 @@ import Link from 'next/link';
 export default function DashboardPage() {
   return (
     <Card className={'bg-transparent shadow-none p-0 border-0'}>
+      <div className='p-8 space-x-6'>
+        <div className='inline-block rotate-6 -skew-6 rounded-xs bg-indigo-500'>
+          <button className='-rotate-6 skew-6 rounded-xs px-6 py-2 text-white'>
+            Sign in
+          </button>
+        </div>
+
+        <button className='rotate-6 -skew-6 rounded-xs ring-1 ring-indigo-500 px-6 py-2 text-indigo-600'>
+          Sign in
+        </button>
+      </div>
       <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4'}>
         <Card className={'col-span-2 bg-transparent shadow-none p-0 border-0'}>
           <CardHeader>
