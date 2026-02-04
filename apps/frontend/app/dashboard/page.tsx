@@ -16,22 +16,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@workspace/ui/components/carousel';
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from '@workspace/ui/components/item';
-import { AlertCircleIcon, SquareArrowOutUpRight } from 'lucide-react';
+import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function DashboardPage() {
   return (
     <Card className={'bg-transparent shadow-none p-0 border-0'}>
-      <div className='p-8 space-x-6'>
+      {/* SKEWED BUTTON EXAMPLES */}
+      {/* <div className='p-8 space-x-6'>
         <div className='inline-block rotate-6 -skew-6 rounded-xs bg-indigo-500'>
           <button className='-rotate-6 skew-6 rounded-xs px-6 py-2 text-white'>
             Sign in
@@ -41,7 +34,7 @@ export default function DashboardPage() {
         <button className='rotate-6 -skew-6 rounded-xs ring-1 ring-indigo-500 px-6 py-2 text-indigo-600'>
           Sign in
         </button>
-      </div>
+      </div> */}
       <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4'}>
         <Card className={'col-span-2 bg-transparent shadow-none p-0 border-0'}>
           <CardHeader>
@@ -61,12 +54,12 @@ export default function DashboardPage() {
           <CardContent className={'space-y-6'}>
             <CardAction className={'self-start justify-self-start'}>
               <Link
-                href={'#'}
+                href={'/dashboard/edit-profile'}
                 className={buttonVariants({ variant: 'default' })}>
                 Setup your account
               </Link>
             </CardAction>
-            <Item variant='destructive'>
+            {/* <Item variant='destructive'>
               <ItemMedia variant={'destructive'}>
                 <AlertCircleIcon className='size-5' />
               </ItemMedia>
@@ -86,10 +79,10 @@ export default function DashboardPage() {
                   View
                 </Link>
               </ItemActions>
-            </Item>
+            </Item> */}
           </CardContent>
 
-          <CardContent>
+          <CardContent className={'mt-28'}>
             <ClientReviews />
             {/* <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
               <div className='bg-muted/50 aspect-video rounded-xl' />
@@ -234,8 +227,8 @@ function ClientReviews() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className={'-left-4'} />
+      <CarouselNext className={'-right-4'} />
     </Carousel>
   );
 }

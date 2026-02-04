@@ -23,14 +23,14 @@ export const dashboardData = {
   },
   navMain: [
     {
-      title: 'Edit profile',
-      url: '#',
-      icon: IconPencil,
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: IconLayout2,
     },
     {
-      title: 'Dashboard',
-      url: '#',
-      icon: IconLayout2,
+      title: 'Edit profile',
+      url: '/dashboard/edit-profile',
+      icon: IconPencil,
     },
     {
       title: 'Manage sessions',
