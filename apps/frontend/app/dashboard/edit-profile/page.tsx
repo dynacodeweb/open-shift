@@ -61,9 +61,9 @@ export default function EditProfile() {
     resolver: isNpcOpen ? zodResolver(npcSchema) : undefined,
     defaultValues: {
       referenceNumber: '',
-      dateOfExpiry: undefined, // new Date(),
+      dateOfExpiry: undefined,
       providerName: '',
-      dateOfIssue: undefined, // new Date(),
+      dateOfIssue: undefined,
     },
   });
 
