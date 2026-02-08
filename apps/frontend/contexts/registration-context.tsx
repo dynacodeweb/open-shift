@@ -86,7 +86,7 @@ export function RegistrationContextProvider({
 export function useRegistrationContext() {
   const context = useContext(RegistrationContext);
 
-  if (!context) {
+  if (context === null) {
     throw new Error(
       'useRegistrationContext must be used within a RegistrationProvider',
     );

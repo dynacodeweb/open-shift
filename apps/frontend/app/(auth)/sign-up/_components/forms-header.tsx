@@ -46,11 +46,13 @@ export default function RenderFormsHeader() {
             <h2 className={'text-xl'}>Where are you located?</h2>
           </CardTitle>
           <CardDescription>State/Postcode/Suburb*</CardDescription>
-          <CardAction onClick={() => form.reset()}>
-            <Button type='button' variant={'destructive'} size={'icon-sm'}>
-              <IconReload className={'size-4'} />
-            </Button>
-          </CardAction>
+          {isDev && (
+            <CardAction onClick={() => form.reset()}>
+              <Button type='button' variant={'destructive'} size={'icon-sm'}>
+                <IconReload className={'size-4'} />
+              </Button>
+            </CardAction>
+          )}
         </CardHeader>
       );
 
@@ -62,11 +64,13 @@ export default function RenderFormsHeader() {
               How many hours a week would you like to work on the platform?
             </h2>
           </CardTitle>
-          <CardAction onClick={() => form.reset()}>
-            <Button type='button' variant={'destructive'} size={'icon-sm'}>
-              <IconReload className={'size-4'} />
-            </Button>
-          </CardAction>
+          {isDev && (
+            <CardAction onClick={() => form.reset()}>
+              <Button type='button' variant={'destructive'} size={'icon-sm'}>
+                <IconReload className={'size-4'} />
+              </Button>
+            </CardAction>
+          )}
         </CardHeader>
       );
 
@@ -76,11 +80,13 @@ export default function RenderFormsHeader() {
           <CardTitle>
             <h2 className={'text-xl'}>When would you like to start working?</h2>
           </CardTitle>
-          <CardAction onClick={() => form.reset()}>
-            <Button type='button' variant={'destructive'} size={'icon-sm'}>
-              <IconReload className={'size-4'} />
-            </Button>
-          </CardAction>
+          {isDev && (
+            <CardAction onClick={() => form.reset()}>
+              <Button type='button' variant={'destructive'} size={'icon-sm'}>
+                <IconReload className={'size-4'} />
+              </Button>
+            </CardAction>
+          )}
         </CardHeader>
       );
 
@@ -90,11 +96,13 @@ export default function RenderFormsHeader() {
           <CardTitle>
             <h2 className={'text-xl'}>Please provide your details</h2>
           </CardTitle>
-          <CardAction onClick={() => form.reset()}>
-            <Button type='button' variant={'destructive'} size={'icon-sm'}>
-              <IconReload className={'size-4'} />
-            </Button>
-          </CardAction>
+          {isDev && (
+            <CardAction onClick={() => form.reset()}>
+              <Button type='button' variant={'destructive'} size={'icon-sm'}>
+                <IconReload className={'size-4'} />
+              </Button>
+            </CardAction>
+          )}
         </CardHeader>
       );
 

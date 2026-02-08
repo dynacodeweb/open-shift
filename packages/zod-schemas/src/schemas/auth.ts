@@ -23,13 +23,24 @@ export const mostImportantReason = [
   'to_have_more_flexibility_in_my_work_life',
 ] as const;
 
+const passwordSpecialCharacters = '!@#$%^&*()_+-=[]{};\':"\\|,.<>/?';
+const escapeForCharClass = (value: string) =>
+  value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+const passwordSpecialCharClass = escapeForCharClass(passwordSpecialCharacters);
+const passwordRegex = new RegExp(
+  `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[${passwordSpecialCharClass}])[A-Za-z\\d${passwordSpecialCharClass}]{8,}$`,
+);
 export const passwordRequirements = [
   { regex: /.{8,}/, text: 'At least 8 characters' },
   { regex: /[a-z]/, text: 'At least 1 lowercase letter' },
   { regex: /[A-Z]/, text: 'At least 1 uppercase letter' },
   { regex: /[0-9]/, text: 'At least 1 number' },
+  // {
+  //   regex: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/,
+  //   text: 'At least 1 special character',
+  // },
   {
-    regex: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/,
+    regex: new RegExp(`[${passwordSpecialCharClass}]`),
     text: 'At least 1 special character',
   },
 ];
@@ -81,8 +92,8 @@ export const registerSchema = z.object({
   password: z
     .string()
     .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character (@, $, !, %, *, ?, &)',
+      passwordRegex,
+      'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.',
     )
     .min(8, 'Password must be at least 8 characters')
     .max(32, 'Password must be at most 32 characters'),

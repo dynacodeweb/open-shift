@@ -150,6 +150,14 @@ export default function AutofillInput() {
         // result.feature contains the standardized address feature
         // submitFormWithChanges(result.feature); // your submit logic
         console.log('result change', result);
+        // Update form with the corrected address from Mapbox
+        const props = result.feature?.properties;
+        if (props) {
+          form.setValue('address-line1', props['address_line1'] ?? '');
+          form.setValue('city', props['address_level2'] ?? '');
+          form.setValue('state', props['address_level1'] ?? '');
+          form.setValue('postal-code', props['postcode'] ?? '');
+        }
         toast.success(
           <div>
             <p>Address updated to:</p>

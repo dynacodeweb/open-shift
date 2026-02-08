@@ -29,22 +29,29 @@ export default function RenderFromsFooter() {
 
   const isStep1Valid = valuesWatched.provideService !== undefined;
   const isStep3Valid =
-    valuesWatched['address-line1'] !== '' &&
-    valuesWatched.city !== '' &&
-    valuesWatched.state !== '';
+    !!valuesWatched['address-line1'] &&
+    !!valuesWatched.city &&
+    !!valuesWatched.state;
   const isStep4Valid = valuesWatched.weeklyWorkingHours !== undefined;
   const isStep5Valid = valuesWatched.willingToStartWorking !== undefined;
   const isStep6Valid =
-    valuesWatched.firstName !== '' &&
-    valuesWatched.lastName !== '' &&
-    valuesWatched.mobileNumber !== '' &&
-    valuesWatched.email !== '' &&
-    valuesWatched.password !== '' &&
+    !!valuesWatched.firstName &&
+    !!valuesWatched.lastName &&
+    !!valuesWatched.mobileNumber &&
+    !!valuesWatched.email &&
+    !!valuesWatched.password &&
     valuesWatched.isTermsAndConditionAccepted === true;
-  const allStepsValid =
-    isStep1Valid && isStep3Valid && isStep4Valid && isStep5Valid && isStep6Valid
-      ? false
-      : true;
+  // const allStepsValid =
+  //   isStep1Valid && isStep3Valid && isStep4Valid && isStep5Valid && isStep6Valid
+  //     ? false
+  //     : true;
+  const hasInvalidSteps = !(
+    isStep1Valid &&
+    isStep3Valid &&
+    isStep4Valid &&
+    isStep5Valid &&
+    isStep6Valid
+  );
 
   function validateAddress() {
     startAddressTransition(async () => {
@@ -63,7 +70,17 @@ export default function RenderFromsFooter() {
         // user chose a better match in the dialog
         // result.feature contains the standardized address feature
         // submitFormWithChanges(result.feature); // your submit logic
-        console.log('result change', result);
+        // console.log('result change', result);
+        // user chose a better match — update form fields with corrected address
+        // TODO: apply result.feature to form fields, e.g.:
+        form.setValue(
+          'address-line1',
+          result.feature.properties.address_line1 ?? '',
+        );
+        form.setValue('city', result.feature.properties.address_level2 ?? '');
+        form.setValue('state', result.feature.properties.address_level1 ?? '');
+        nextStep(4);
+        onAddressValidation(true);
         return;
       }
 
@@ -95,8 +112,11 @@ export default function RenderFromsFooter() {
             variant={'skewed'}
             className='rounded-[4px]!'
             onClick={() => {
-              nextStep(2);
-              form.trigger('provideService');
+              // nextStep(2);
+              // form.trigger('provideService');
+              form.trigger('provideService').then((isValid) => {
+                if (isValid) nextStep(2);
+              });
             }}>
             Next
           </Button>
@@ -237,7 +257,8 @@ export default function RenderFromsFooter() {
             </Button>
           )}
           <Button
-            disabled={allStepsValid || isSignUpPending}
+            // disabled={allStepsValid || isSignUpPending}
+            disabled={hasInvalidSteps || isSignUpPending}
             type={'submit'}
             className={'rounded-[4px]'}
             variant={'skewed'}>

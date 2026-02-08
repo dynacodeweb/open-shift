@@ -67,7 +67,7 @@ function SignUpFormFields() {
   const form = useFormContext<RegisterValues>();
 
   const onError: SubmitErrorHandler<RegisterValues> = (errors) => {
-    console.log('validation errors', errors);
+    if (isDev) console.log('validation errors', errors);
     Object.values(errors).forEach((error) => {
       toast.error(error.message, {
         id: `validation-error-${error.message}`,
@@ -76,7 +76,7 @@ function SignUpFormFields() {
   };
 
   const onSubmit: SubmitHandler<RegisterValues> = (data) => {
-    // console.log('validated data', data);
+    if (isDev) console.log('validated data', data);
     startSignUpTransition(async () => {
       await sleep(2000); // simulate API call
       toast.promise(sleep(300), {
