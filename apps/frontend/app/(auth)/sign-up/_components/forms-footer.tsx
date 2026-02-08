@@ -12,7 +12,7 @@ import { useTransition } from 'react';
 
 const isDev = process.env.NODE_ENV === 'development';
 
-export default function RenderFromsFooter() {
+export default function RenderFormsFooter() {
   const [isAddressPending, startAddressTransition] = useTransition();
   const {
     step,
