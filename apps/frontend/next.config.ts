@@ -6,6 +6,10 @@ loadEnvConfig(process.cwd());
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  typedRoutes: true,
+  experimental: {
+    typedEnv: true,
+  },
   rewrites() {
     return [
       {

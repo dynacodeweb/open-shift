@@ -8,6 +8,7 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from 'lucide-react';
+import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -108,7 +109,7 @@ export default function Footer() {
               {footerSocialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <Link key={link.id} href={link.href}>
+                  <Link key={link.id} href={link.href as Route}>
                     <Icon
                       className={cn(
                         'size-4 md:size-6 stroke-1 stroke-primary hover:stroke-secondary hover:fill-primary transition-all duration-200',
@@ -144,7 +145,7 @@ export default function Footer() {
                     return (
                       <Link
                         key={link.id}
-                        href={link.href}
+                        href={link.href as Route}
                         className={buttonVariants({
                           variant: 'link',
                           size: 'sm',

@@ -1,11 +1,12 @@
 'use client';
 
+import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 import { cn } from '@workspace/ui/lib/utils';
-import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';
 
 const requirements = [
   { regex: /.{8,}/, text: 'At least 8 characters' },
@@ -20,12 +21,13 @@ const requirements = [
 
 type InputPasswordStrengthProps = {
   statusInfo: boolean;
+  field: ControllerRenderProps<FieldValues, 'password'>;
 };
 
 export default function InputPasswordStrength(
-  props: InputPasswordStrengthProps
+  props: InputPasswordStrengthProps,
 ) {
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
   const id = useId();
@@ -33,7 +35,8 @@ export default function InputPasswordStrength(
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const strength = requirements.map((req) => ({
-    met: req.regex.test(password),
+    // met: req.regex.test(password),
+    met: req.regex.test(props.field.value),
     text: req.text,
   }));
 
@@ -67,11 +70,18 @@ export default function InputPasswordStrength(
           id={id}
           type={isVisible ? 'text' : 'password'}
           placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          // value={props.field.value || password}
+          // onChange={(e) => {
+          //   setPassword(e.target.value);
+          //   if (props.field) {
+          //     props.field.onChange(e.target.value);
+          //   }
+          // }}
+          {...props.field}
           className='pr-9'
         />
         <Button
+          type='button'
           variant='ghost'
           size='icon'
           onClick={toggleVisibility}
@@ -83,16 +93,21 @@ export default function InputPasswordStrength(
         </Button>
       </div>
 
-      <div className='flex h-1 w-full gap-1'>
+      <div className='flex items-center h-1 w-full gap-1'>
         {Array.from({ length: 5 }).map((_, index) => (
           <span
             key={index}
             className={cn(
               'h-full flex-1 rounded-full transition-all duration-500 ease-out',
-              index < strengthScore ? getColor(strengthScore) : 'bg-border'
+              index < strengthScore ? getColor(strengthScore) : 'bg-border',
             )}
           />
         ))}
+        {strength.find((req) => !req.met) ? (
+          <XIcon className='text-destructive size-4' />
+        ) : (
+          <CheckIcon className='size-4 text-green-600 dark:text-green-400' />
+        )}
       </div>
 
       <p className='text-foreground text-xs font-medium'>
@@ -113,7 +128,7 @@ export default function InputPasswordStrength(
                   'text-xs',
                   req.met
                     ? 'text-green-600 dark:text-green-400'
-                    : 'text-muted-foreground'
+                    : 'text-muted-foreground',
                 )}>
                 {req.text}
                 <span className='sr-only'>

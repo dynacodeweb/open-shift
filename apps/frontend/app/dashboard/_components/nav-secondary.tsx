@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@workspace/ui/components//sidebar';
+import type { Route } from 'next';
 import Link from 'next/link';
 
 export function NavSecondary({
@@ -24,7 +25,7 @@ export function NavSecondary({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild tooltip={item.title}>
-                <Link href={item.url}>
+                <Link href={item.url as Route}>
                   <item.icon />
                   <span>{item.title}</span>
                 </Link>

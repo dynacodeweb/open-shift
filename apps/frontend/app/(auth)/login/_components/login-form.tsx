@@ -1,5 +1,17 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition, type SVGProps } from 'react';
+import {
+  Controller,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+
 import { Button } from '@workspace/ui/components/button';
 import {
   Card,
@@ -12,14 +24,14 @@ import { Checkbox } from '@workspace/ui/components/checkbox';
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
 } from '@workspace/ui/components/field';
 import { Input } from '@workspace/ui/components/input';
 import { toast } from '@workspace/ui/components/sonner';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Spinner } from '@workspace/ui/components/spinner';
+import { loginSchema, LoginValues } from '@workspace/zod-schemas';
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,7 +39,46 @@ function sleep(ms: number) {
 
 export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoginPending, startLoginTransition] = useTransition();
   const router = useRouter();
+
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  });
+
+  const onError: SubmitErrorHandler<LoginValues> = (errors) => {
+    console.log('validation errors', errors);
+    Object.values(errors).forEach((error) => {
+      toast.error(error.message, {
+        id: `validation-error-${error.message}`,
+      });
+    });
+  };
+
+  const onSubmit: SubmitHandler<LoginValues> = (data) => {
+    // console.log('validated data', data);
+    startLoginTransition(async () => {
+      await sleep(2000); // simulate API call
+      toast.promise(sleep(300), {
+        loading: 'Logging your account...',
+        success: 'Successfully logged in!',
+        error: 'Failed to log in.',
+      });
+      setTimeout(() => {
+        router.push('/dashboard');
+        toast.success(
+          <pre className={'text-left text-xs overflow-x-scroll'}>
+            {JSON.stringify(data, null, 2)}
+          </pre>,
+        );
+      }, 250);
+    });
+  };
 
   return (
     <Card className={'max-w-lg w-full h-fit gap-4 py-4'}>
@@ -36,61 +87,103 @@ export default function LoginForm() {
         <CardDescription>Log in to continue</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit, onError)}
+          className={'w-full'}>
           <FieldGroup className={'gap-4'}>
+            <Controller
+              name='email'
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field
+                  data-invalid={fieldState.invalid}
+                  aria-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor='email'>Email</FieldLabel>
+                  <Input
+                    id='email'
+                    type='email'
+                    placeholder='m@example.com'
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.error && (
+                    <FieldError role='alert' errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name='password'
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field
+                  data-invalid={fieldState.invalid}
+                  aria-invalid={fieldState.invalid}>
+                  <div className='flex items-center'>
+                    <FieldLabel htmlFor='password'>Password</FieldLabel>
+                    <Link
+                      href='#'
+                      className='ml-auto inline-block text-sm underline-offset-4 hover:underline'>
+                      Forgot your password?
+                    </Link>
+                  </div>
+                  <div className='relative'>
+                    <Input
+                      id={'password'}
+                      type={isVisible ? 'text' : 'password'}
+                      placeholder='Password'
+                      className='pr-9'
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                    />
+                    <Button
+                      type='button'
+                      variant='ghost'
+                      size='icon'
+                      onClick={() => setIsVisible((prevState) => !prevState)}
+                      className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'>
+                      {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+                      <span className='sr-only'>
+                        {isVisible ? 'Hide password' : 'Show password'}
+                      </span>
+                    </Button>
+                  </div>
+
+                  {fieldState.error && (
+                    <FieldError role='alert' errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name='rememberMe'
+              control={form.control}
+              render={({ field }) => (
+                <Field orientation='horizontal'>
+                  <Checkbox
+                    id='stay-logged-in'
+                    checked={field.value}
+                    onCheckedChange={(checked) => field.onChange(checked)}
+                  />
+                  <FieldLabel htmlFor='stay-logged-in' className={'text-xs'}>
+                    Stay logged in
+                  </FieldLabel>
+                </Field>
+              )}
+            />
+
             <Field>
-              <FieldLabel htmlFor='email'>Email</FieldLabel>
-              <Input id='email' type='email' placeholder='m@example.com' />
-            </Field>
-            <Field>
-              <div className='flex items-center'>
-                <FieldLabel htmlFor='password'>Password</FieldLabel>
-                <Link
-                  href='#'
-                  className='ml-auto inline-block text-sm underline-offset-4 hover:underline'>
-                  Forgot your password?
-                </Link>
-              </div>
-              <div className='relative'>
-                <Input
-                  id={'password'}
-                  type={isVisible ? 'text' : 'password'}
-                  placeholder='Password'
-                  className='pr-9'
-                />
-                <Button
-                  type='button'
-                  variant='ghost'
-                  size='icon'
-                  onClick={() => setIsVisible((prevState) => !prevState)}
-                  className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'>
-                  {isVisible ? <EyeOffIcon /> : <EyeIcon />}
-                  <span className='sr-only'>
-                    {isVisible ? 'Hide password' : 'Show password'}
+              <Button type='submit' disabled={isLoginPending}>
+                {isLoginPending ? (
+                  <span className={'inline-flex items-center gap-2'}>
+                    Logging in...
+                    <Spinner className='size-4' />
                   </span>
-                </Button>
-              </div>
-            </Field>
-            <Field orientation='horizontal'>
-              <Checkbox id='stay-logged-in' defaultChecked />
-              <FieldLabel htmlFor='stay-logged-in' className={'text-xs'}>
-                Stay logged in
-              </FieldLabel>
-            </Field>
-            <Field>
-              <Button
-                type='submit'
-                onClick={() => {
-                  toast.promise(sleep(300), {
-                    loading: 'Logging your account...',
-                    success: 'Successfully logged in!',
-                    error: 'Failed to log in.',
-                  });
-                  setTimeout(() => {
-                    router.push('/dashboard');
-                  }, 250);
-                }}>
-                Login
+                ) : (
+                  <span>Log in</span>
+                )}
               </Button>
               <Button variant='outline' type='button'>
                 <Google className='size-4' />
@@ -106,8 +199,6 @@ export default function LoginForm() {
     </Card>
   );
 }
-
-import { useState, type SVGProps } from 'react';
 
 const Google = (props: SVGProps<SVGSVGElement>) => (
   <svg

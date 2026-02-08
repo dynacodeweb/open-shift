@@ -30,14 +30,20 @@ export default function OnboardingForm() {
     setStep(newStep);
   }
 
-  switch (step) {
-    case 1:
-      return <Step1 onChangeStep={changeStep} />;
-    case 2:
-      return <Step2 />;
-    default:
-      return null;
-  }
+  // switch (step) {
+  //   case 1:
+  //     return <Step1 onChangeStep={changeStep} />;
+  //   case 2:
+  //     return <Step2 />;
+  //   default:
+  //     return null;
+  // }
+  return (
+    <div className={'flex items-center gap-4'}>
+      <Step1 onChangeStep={changeStep} />
+      <Step2 />
+    </div>
+  );
 }
 
 type StepProps = {
