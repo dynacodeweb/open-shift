@@ -8,6 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@workspace/ui/components/sidebar';
+import type { Route } from 'next';
 import Link from 'next/link';
 
 export function NavMain() {
@@ -18,7 +19,7 @@ export function NavMain() {
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
-              <Link href={item.url}>
+              <Link href={item.url as Route}>
                 <item.icon />
                 <span>{item.title}</span>
               </Link>

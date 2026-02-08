@@ -63,6 +63,7 @@ import { Separator } from '@workspace/ui/components/separator';
 import { Textarea } from '@workspace/ui/components/textarea';
 import { cn } from '@workspace/ui/lib/utils';
 import { BadgeCheckIcon } from 'lucide-react';
+import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -712,7 +713,7 @@ function SectionOurTeam() {
                     <p>{team.role}</p>
                   </CardDescription>
                   <CardAction>
-                    <Link href={team.socialLink} target='_blank'>
+                    <Link href={team.socialLink as Route} target='_blank'>
                       <team.socialIcon className='size-full text-primary' />
                     </Link>
                   </CardAction>

@@ -13,6 +13,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@liorpo/react-hook-form-persist": "^1.0.10",
+    "@mapbox/search-js-core": "^1.5.1",
+    "@mapbox/search-js-react": "^1.5.1",
+    "@mapbox/search-js-web": "^1.5.1",
     "@next/env": "^16.1.1",
     "@tabler/icons-react": "^3.36.1",
     "@workspace/ui": "workspace:*",
@@ -25,6 +29,7 @@
     "react-hook-form": "^7.71.0"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^20.19.25",
     "@types/react": "^19.2.7",
@@ -32,6 +37,7 @@
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "babel-plugin-react-compiler": "1.0.0",
+    "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3"
   }

@@ -2,6 +2,7 @@
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
+import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ThemeModeToggler } from './theme-toggler';
@@ -66,7 +67,7 @@ export default function Navbar() {
             return (
               <Link
                 key={link.id}
-                href={link.href}
+                href={link.href as Route}
                 className={cn(
                   firstItem
                     ? buttonVariants({
