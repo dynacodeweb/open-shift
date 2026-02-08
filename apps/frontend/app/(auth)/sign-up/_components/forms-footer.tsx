@@ -138,7 +138,7 @@ export default function RenderFormsFooter() {
             disabled={!isStep1Valid}
             variant={'skewed'}
             className='rounded-[4px]!'
-            onClick={() => prevStep(3)}>
+            onClick={() => nextStep(3)}>
             Next
           </Button>
         </CardFooter>

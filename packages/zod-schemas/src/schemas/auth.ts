@@ -93,7 +93,10 @@ export const registerSchema = z
     mobileNumber: z
       .string()
       .trim()
-      .regex(/^\+?\d{10,15}$/, 'Mobile number must contain only digits')
+      .regex(
+        /^\+?\d{10,15}$/,
+        'Mobile number must be 10-15 digits, optionally prefixed with +',
+      )
       .min(10, 'Mobile number must be at least 10 digits')
       .max(15, 'Mobile number must be at most 15 digits'),
     // TODO: Add regex validation for email to ensure it follows a standard email domain format (e.g. example.com, domain.co.uk).
@@ -108,7 +111,7 @@ export const registerSchema = z
       .min(8, 'Password must be at least 8 characters')
       .max(32, 'Password must be at most 32 characters'),
     isTermsAndConditionAccepted: z.boolean().refine((val) => val === true, {
-      message: 'You must accept the terms and conditions',
+      error: 'You must accept the terms and conditions',
     }),
   })
   .extend(addressSchema.shape);
