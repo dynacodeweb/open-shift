@@ -1,49 +1,15 @@
 'use client';
 
+import { navlinks } from '@/constants';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import NavigationSheet from './navigation-sheet';
 import { ThemeModeToggler } from './theme-toggler';
 
-const navlinks = [
-  {
-    id: crypto.randomUUID(),
-    label: 'Home',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'Programs',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'Trainers',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'Blog',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'About',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'Pricing',
-    href: '#',
-  },
-  {
-    id: crypto.randomUUID(),
-    label: 'Contact',
-    href: '#',
-  },
-];
+const isDev = process.env.NODE_ENV === 'development';
 
 export default function Navbar() {
   return (
@@ -61,7 +27,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav className={'flex items-center gap-2'}>
+        <nav className={'hidden lg:flex items-center gap-2'}>
           {navlinks.map((link, idx) => {
             const firstItem = idx === 0;
             return (
@@ -87,8 +53,8 @@ export default function Navbar() {
           })}
         </nav>
 
-        <div className={'flex items-center gap-2'}>
-          <ThemeModeToggler />
+        <div className={'hidden lg:flex items-center gap-2'}>
+          {isDev && <ThemeModeToggler />}
           <Link
             href={'/login'}
             className={buttonVariants({
@@ -107,6 +73,11 @@ export default function Navbar() {
             })}>
             Get Started
           </Link>
+        </div>
+
+        {/* Mobile menu */}
+        <div className={'block lg:hidden'}>
+          <NavigationSheet />
         </div>
       </div>
     </header>
