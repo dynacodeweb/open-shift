@@ -244,8 +244,23 @@
   @apply bg-[#A8E6CF] text-[#10443B];
 }
 
-.contact-form-border {
+/* .contact-form-border {
   @apply shadow-none border-[1px_0px_0px_1px] border-solid border-[linear-gradient(146.14deg,_#4ABD9D_0%,_#B9E8D8_33.91%,_rgba(185,_232,_216,_0)_100%)] from-[#4ABD9D] via-[#B9E8D8] to-[rgba(185,232,216,0)];
+} */
+
+.contact-form-border {
+  border: 1px solid transparent;
+  border-image: linear-gradient(
+      146.14deg,
+      `#4ABD9D` 0%,
+      `#B9E8D8` 33.91%,
+      rgba(185, 232, 216, 0) 100%
+    )
+    1;
+  /* Optionally only left and top borders: */
+  border-right: none;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 .who-we-are-clip-path {

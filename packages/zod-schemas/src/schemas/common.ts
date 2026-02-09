@@ -25,7 +25,7 @@ export const contactSchema = z.object({
       'Mobile number must be 10-15 digits, optionally prefixed with +',
     )
     .min(10, 'Mobile number must be at least 10 digits')
-    .max(15, 'Mobile number must be at most 15 digits'),
+    .max(16, 'Mobile number must be at most 15 digits with optional + prefix'),
   message: z
     .string()
     .trim()

@@ -499,12 +499,8 @@ const partners = [
 ];
 
 function SectionOurPartners() {
-  const doubledPartners = [
-    ...partners,
-    ...partners.reverse(),
-    ...partners,
-    ...partners.reverse(),
-  ];
+  const reversed = [...partners].reverse();
+  const doubledPartners = [...partners, ...reversed, ...partners, ...reversed];
 
   return (
     <section className={'h-full w-full py-20 md:py-24 lg:py-28 px-4 2xl:px-0'}>
@@ -886,7 +882,7 @@ function SectionOurTeam() {
                 className: 'rounded-sm!',
                 size: 'lg',
               })}>
-              Make an Inquirey
+              Make an Inquiry
             </Link>
           </div>
         </SectionHeadingContainer>
@@ -1037,8 +1033,16 @@ function SectionTestimonials() {
                     <CardHeader>
                       <div className={'flex items-center gap-4'}>
                         <Avatar>
-                          <AvatarImage src={testimonial.image} alt='@shadcn' />
-                          <AvatarFallback>CN</AvatarFallback>
+                          <AvatarImage
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                          />
+                          <AvatarFallback>
+                            {testimonial.name
+                              .split(' ')
+                              .map((n) => n[0])
+                              .join('')}
+                          </AvatarFallback>
                         </Avatar>
 
                         <div>

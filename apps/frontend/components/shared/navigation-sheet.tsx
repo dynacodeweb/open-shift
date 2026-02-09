@@ -47,24 +47,25 @@ export default function NavigationSheet() {
           {navlinks.map((link, idx) => {
             const firstItem = idx === 0;
             return (
-              <Link
-                key={link.id}
-                href={link.href as Route}
-                className={cn(
-                  firstItem
-                    ? buttonVariants({
-                        variant: 'skewed',
-                        size: 'sm',
-                        className: 'rounded-sm! w-full',
-                      })
-                    : buttonVariants({
-                        variant: 'skewed-outline',
-                        size: 'sm',
-                        className: 'rounded-sm! w-full',
-                      }),
-                )}>
-                {link.label}
-              </Link>
+              <SheetClose asChild key={link.id}>
+                <Link
+                  href={link.href as Route}
+                  className={cn(
+                    firstItem
+                      ? buttonVariants({
+                          variant: 'skewed',
+                          size: 'sm',
+                          className: 'rounded-sm! w-full',
+                        })
+                      : buttonVariants({
+                          variant: 'skewed-outline',
+                          size: 'sm',
+                          className: 'rounded-sm! w-full',
+                        }),
+                  )}>
+                  {link.label}
+                </Link>
+              </SheetClose>
             );
           })}
         </nav>
