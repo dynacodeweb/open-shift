@@ -89,35 +89,38 @@ export default function Footer() {
         'px-4 pt-24 bg-[linear-gradient(280.56deg,_rgba(255,_160,_160,_0.6)_0%,_rgba(255,_225,_225,_0.8)_24.02%,_rgba(215,_244,_232,_0.8)_80%,_#EEFBF6_100%)]'
       }>
       <div className={'container max-w-[85em] mx-auto w-full'}>
-        <div className={'grid grid-cols-1 lg:grid-cols-5 gap-4'}>
-          <div className={'grid grid-cols-subgrid gap-4'}>
-            <Link href={'/'} className={'w-full h-full'}>
-              <Image
-                src={'/logo.svg'}
-                alt='logo'
-                width={375}
-                height={40}
-                className={'w-full h-full object-top'}
-                priority={true}
-              />
-            </Link>
-            <p className={'text-sm text-muted-foreground'}>
-              We are dedicated to providing exceptional caregiving services
-              tailored to your unique needs.
-            </p>
-            <div className={'flex items-center gap-2'}>
-              {footerSocialLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <Link key={link.id} href={link.href as Route}>
-                    <Icon
-                      className={cn(
-                        'size-4 md:size-6 stroke-1 stroke-primary hover:stroke-secondary hover:fill-primary transition-all duration-200',
-                      )}
-                    />
-                  </Link>
-                );
-              })}
+        <div
+          className={'grid grid-cols-1 xs-2:grid-cols-2 lg:grid-cols-5 gap-4'}>
+          <div className={'col-span-full lg:col-span-1'}>
+            <div className={'grid grid-cols-subgrid gap-4'}>
+              <Link href={'/'} className={'w-full h-full'}>
+                <Image
+                  src={'/logo.svg'}
+                  alt='logo'
+                  width={375}
+                  height={40}
+                  className={'w-full h-full object-top'}
+                  priority={true}
+                />
+              </Link>
+              <p className={'text-sm text-muted-foreground'}>
+                We are dedicated to providing exceptional caregiving services
+                tailored to your unique needs.
+              </p>
+              <div className={'flex items-center gap-2'}>
+                {footerSocialLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <Link key={link.id} href={link.href as Route}>
+                      <Icon
+                        className={cn(
+                          'size-4 md:size-6 stroke-1 stroke-primary hover:stroke-secondary hover:fill-primary transition-all duration-200',
+                        )}
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
