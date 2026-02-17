@@ -1,17 +1,40 @@
 'use client';
 
 import { navlinks } from '@/constants';
-import { buttonVariants } from '@workspace/ui/components/button';
+import { Button, buttonVariants } from '@workspace/ui/components/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@workspace/ui/components/popover';
 import { cn } from '@workspace/ui/lib/utils';
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import NavigationSheet from './navigation-sheet';
 import { ThemeModeToggler } from './theme-toggler';
 
 const isDev = process.env.NODE_ENV === 'development';
 
 export default function Navbar() {
+  const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
+  const [isSignUpPopoverOpen, setIsSignUpPopoverOpen] = useState(false);
+
+  function toggleLoginPopover() {
+    setIsLoginPopoverOpen((prev) => !prev);
+    if (isSignUpPopoverOpen) {
+      setIsSignUpPopoverOpen(false);
+    }
+  }
+
+  function toggleSignUpPopover() {
+    setIsSignUpPopoverOpen((prev) => !prev);
+    if (isLoginPopoverOpen) {
+      setIsLoginPopoverOpen(false);
+    }
+  }
+
   return (
     <header
       className={'bg-background border-border shadow-sm sticky top-0 z-50'}>
@@ -37,12 +60,12 @@ export default function Navbar() {
                 className={cn(
                   firstItem
                     ? buttonVariants({
-                        variant: 'skewed',
+                        // variant: 'skewed',
                         size: 'sm',
                         className: 'rounded-sm!',
                       })
                     : buttonVariants({
-                        variant: 'skewed-outline',
+                        variant: 'outline',
                         size: 'sm',
                         className: 'rounded-sm!',
                       }),
@@ -55,24 +78,93 @@ export default function Navbar() {
 
         <div className={'hidden lg:flex items-center gap-2'}>
           {isDev && <ThemeModeToggler />}
-          <Link
-            href={'/login'}
-            className={buttonVariants({
-              variant: 'skewed-outline',
-              size: 'sm',
-              className: 'rounded-sm!',
-            })}>
-            Login
-          </Link>
-          <Link
-            href={'/sign-up'}
-            className={buttonVariants({
-              variant: 'skewed',
-              size: 'sm',
-              className: 'rounded-sm!',
-            })}>
-            Get Started
-          </Link>
+          <Popover open={isLoginPopoverOpen} onOpenChange={toggleLoginPopover}>
+            <PopoverTrigger asChild>
+              <Button variant='outline'>Login</Button>
+            </PopoverTrigger>
+
+            <PopoverContent className={'space-y-2 p-1'}>
+              <div>
+                <Link
+                  href={'/login'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={toggleLoginPopover}>
+                  <p className={'text-sm'}>Login as Owner</p>
+                  <span className={'text-xs text-balance'}>
+                    I own a clinic and want to manage my appointments, staff,
+                    and more.
+                  </span>
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={'/login'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={toggleLoginPopover}>
+                  <p className={'text-sm'}>Login as Nurse</p>
+                  <span className={'text-xs text-balance'}>
+                    I am a nurse and want to view my schedule, manage my
+                    appointments, and communicate with patients.
+                  </span>
+                </Link>
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          <Popover
+            open={isSignUpPopoverOpen}
+            onOpenChange={toggleSignUpPopover}>
+            <PopoverTrigger asChild>
+              <Button>Get Started</Button>
+            </PopoverTrigger>
+
+            <PopoverContent className={'space-y-2 p-1'}>
+              <div>
+                <Link
+                  href={'/sign-up'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={toggleSignUpPopover}>
+                  <p className={'text-sm'}>Register as Owner</p>
+                  <span className={'text-xs text-balance'}>
+                    I own a clinic and want to manage my appointments, staff,
+                    and more.
+                  </span>
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={'/sign-up'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={toggleSignUpPopover}>
+                  <p className={'text-sm'}>Register as Provider</p>
+                  <span className={'text-xs text-balance'}>
+                    I am a nurse and want to view my schedule, manage my
+                    appointments, and communicate with patients.
+                  </span>
+                </Link>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Mobile menu */}

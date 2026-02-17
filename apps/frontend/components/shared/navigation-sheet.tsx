@@ -2,6 +2,11 @@
 
 import { navlinks } from '@/constants';
 import { Button, buttonVariants } from '@workspace/ui/components/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@workspace/ui/components/popover';
 import { Separator } from '@workspace/ui/components/separator';
 import {
   Sheet,
@@ -17,10 +22,29 @@ import { MenuIcon } from 'lucide-react';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function NavigationSheet() {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
+  const [isSignUpPopoverOpen, setIsSignUpPopoverOpen] = useState(false);
+
+  function toggleLoginPopover() {
+    setIsLoginPopoverOpen((prev) => !prev);
+    if (isSignUpPopoverOpen) {
+      setIsSignUpPopoverOpen(false);
+    }
+  }
+
+  function toggleSignUpPopover() {
+    setIsSignUpPopoverOpen((prev) => !prev);
+    if (isLoginPopoverOpen) {
+      setIsLoginPopoverOpen(false);
+    }
+  }
+
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <Button variant='outline' size={'icon-sm'}>
           <MenuIcon className={'size-4'} />
@@ -53,12 +77,12 @@ export default function NavigationSheet() {
                   className={cn(
                     firstItem
                       ? buttonVariants({
-                          variant: 'skewed',
+                          // variant: 'skewed',
                           size: 'sm',
                           className: 'rounded-sm! w-full',
                         })
                       : buttonVariants({
-                          variant: 'skewed-outline',
+                          variant: 'outline',
                           size: 'sm',
                           className: 'rounded-sm! w-full',
                         }),
@@ -72,11 +96,110 @@ export default function NavigationSheet() {
 
         <Separator />
         <SheetFooter>
-          <SheetClose asChild>
+          <Popover open={isLoginPopoverOpen} onOpenChange={toggleLoginPopover}>
+            <PopoverTrigger asChild>
+              <Button variant='outline'>Login</Button>
+            </PopoverTrigger>
+
+            <PopoverContent className={'space-y-2 p-1'}>
+              <div>
+                <Link
+                  href={'/login'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={() => {
+                    toggleLoginPopover();
+                    setIsSheetOpen(false);
+                  }}>
+                  <p className={'text-sm'}>Login as Owner</p>
+                  <span className={'text-xs text-balance'}>
+                    I own a clinic and want to manage my appointments, staff,
+                    and more.
+                  </span>
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={'/login'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={() => {
+                    toggleLoginPopover();
+                    setIsSheetOpen(false);
+                  }}>
+                  <p className={'text-sm'}>Login as Nurse</p>
+                  <span className={'text-xs text-balance'}>
+                    I am a nurse and want to view my schedule, manage my
+                    appointments, and communicate with patients.
+                  </span>
+                </Link>
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          <Popover
+            open={isSignUpPopoverOpen}
+            onOpenChange={toggleSignUpPopover}>
+            <PopoverTrigger asChild>
+              <Button>Get Started</Button>
+            </PopoverTrigger>
+
+            <PopoverContent className={'space-y-2 p-1'}>
+              <div>
+                <Link
+                  href={'/sign-up'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={() => {
+                    toggleSignUpPopover();
+                    setIsSheetOpen(false);
+                  }}>
+                  <p className={'text-sm'}>Register as Owner</p>
+                  <span className={'text-xs text-balance'}>
+                    I own a clinic and want to manage my appointments, staff,
+                    and more.
+                  </span>
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={'/sign-up'}
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
+                  })}
+                  onClick={() => {
+                    toggleSignUpPopover();
+                    setIsSheetOpen(false);
+                  }}>
+                  <p className={'text-sm'}>Register as Provider</p>
+                  <span className={'text-xs text-balance'}>
+                    I am a nurse and want to view my schedule, manage my
+                    appointments, and communicate with patients.
+                  </span>
+                </Link>
+              </div>
+            </PopoverContent>
+          </Popover>
+          {/* <SheetClose asChild>
             <Link
               href={'/login'}
               className={buttonVariants({
-                variant: 'skewed-outline',
+                variant: 'outline',
                 size: 'sm',
                 className: 'rounded-sm!',
               })}>
@@ -87,13 +210,13 @@ export default function NavigationSheet() {
             <Link
               href={'/sign-up'}
               className={buttonVariants({
-                variant: 'skewed',
+                // variant: 'skewed',
                 size: 'sm',
                 className: 'rounded-sm!',
               })}>
               Get Started
             </Link>
-          </SheetClose>
+          </SheetClose> */}
         </SheetFooter>
       </SheetContent>
     </Sheet>

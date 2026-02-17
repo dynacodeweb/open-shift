@@ -168,18 +168,18 @@ function SectionHero() {
 
             <div className={'flex flex-wrap items-center gap-4'}>
               <Link
-                href={'/login'}
+                href={'#'}
                 className={buttonVariants({
-                  variant: 'skewed-outline',
+                  variant: 'outline',
                   className: 'rounded-sm!',
                   size: 'lg',
                 })}>
                 Book a Demo
               </Link>
               <Link
-                href={'/sign-up'}
+                href={'#'}
                 className={buttonVariants({
-                  variant: 'skewed',
+                  // variant: 'skewed',
                   className: 'rounded-sm!',
                   size: 'lg',
                 })}>
@@ -240,7 +240,7 @@ function SectionProblemOverview() {
                   <Link
                     href={'#'}
                     className={buttonVariants({
-                      variant: 'skewed',
+                      // variant: 'skewed',
                       className: 'rounded-sm!',
                       size: 'lg',
                     })}>
@@ -324,7 +324,7 @@ function SectionWhoWeAre() {
             <Link
               href={'#'}
               className={buttonVariants({
-                variant: 'skewed',
+                // variant: 'skewed',
                 className: 'rounded-sm!',
                 size: 'lg',
               })}>
@@ -711,7 +711,7 @@ function SectionOverview() {
                       <Link
                         href={'#'}
                         className={buttonVariants({
-                          variant: 'skewed',
+                          // variant: 'skewed',
                           className: 'rounded-sm!',
                           size: 'lg',
                         })}>
@@ -756,7 +756,7 @@ function SectionCTA() {
               <Link
                 href={'#'}
                 className={buttonVariants({
-                  variant: 'skewed',
+                  // variant: 'skewed',
                   className: 'rounded-sm!',
                   size: 'lg',
                 })}>
@@ -878,7 +878,7 @@ function SectionOurTeam() {
             <Link
               href={'#'}
               className={buttonVariants({
-                variant: 'skewed',
+                // variant: 'skewed',
                 className: 'rounded-sm!',
                 size: 'lg',
               })}>
@@ -1290,7 +1290,7 @@ function SectionContactUs() {
 
                       <Field orientation='horizontal'>
                         <Button
-                          variant={'skewed'}
+                          // variant={'skewed'}
                           size={'lg'}
                           type='submit'
                           className={'w-full'}>

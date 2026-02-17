@@ -34,6 +34,30 @@
         "API_URL"
       ]
     },
+    "nurse#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ],
+      "env": [
+        "API_URL"
+      ]
+    },
+    "owner#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ],
+      "env": [
+        "API_URL"
+      ]
+    },
     "frontend#build": {
       "dependsOn": [
         "^build"
@@ -44,7 +68,12 @@
       ],
       "env": [
         "API_URL",
-        "NODE_ENV"
+        "NODE_ENV",
+        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
+        "NEXT_PUBLIC_OWNER_LOGIN_LINK",
+        "NEXT_PUBLIC_OWNER_SIGNUP_LINK",
+        "NEXT_PUBLIC_NURSE_LOGIN_LINK",
+        "NEXT_PUBLIC_NURSE_SIGNUP_LINK"
       ]
     },
     "backend#build": {
