@@ -24,6 +24,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
+const OWNER_BASE_URL = process.env.NEXT_PUBLIC_OWNER_BASE_URL;
+const NURSE_BASE_URL = process.env.NEXT_PUBLIC_NURSE_BASE_URL;
+
 export default function NavigationSheet() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
@@ -104,13 +107,15 @@ export default function NavigationSheet() {
             <PopoverContent className={'space-y-2 p-1'}>
               <div>
                 <Link
-                  href={'/login'}
+                  prefetch={true}
+                  href={`${OWNER_BASE_URL}/login` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={() => {
                     toggleLoginPopover();
                     setIsSheetOpen(false);
@@ -124,13 +129,15 @@ export default function NavigationSheet() {
               </div>
               <div>
                 <Link
-                  href={'/login'}
+                  prefetch={true}
+                  href={`${NURSE_BASE_URL}/login` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={() => {
                     toggleLoginPopover();
                     setIsSheetOpen(false);
@@ -155,13 +162,15 @@ export default function NavigationSheet() {
             <PopoverContent className={'space-y-2 p-1'}>
               <div>
                 <Link
-                  href={'/sign-up'}
+                  prefetch={true}
+                  href={`${OWNER_BASE_URL}/sign-up` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={() => {
                     toggleSignUpPopover();
                     setIsSheetOpen(false);
@@ -175,13 +184,15 @@ export default function NavigationSheet() {
               </div>
               <div>
                 <Link
-                  href={'/sign-up'}
+                  prefetch={true}
+                  href={`${NURSE_BASE_URL}/sign-up` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={() => {
                     toggleSignUpPopover();
                     setIsSheetOpen(false);

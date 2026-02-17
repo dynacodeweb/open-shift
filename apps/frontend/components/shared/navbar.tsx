@@ -17,6 +17,9 @@ import { ThemeModeToggler } from './theme-toggler';
 
 const isDev = process.env.NODE_ENV === 'development';
 
+const OWNER_BASE_URL = process.env.NEXT_PUBLIC_OWNER_BASE_URL;
+const NURSE_BASE_URL = process.env.NEXT_PUBLIC_NURSE_BASE_URL;
+
 export default function Navbar() {
   const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
   const [isSignUpPopoverOpen, setIsSignUpPopoverOpen] = useState(false);
@@ -86,13 +89,15 @@ export default function Navbar() {
             <PopoverContent className={'space-y-2 p-1'}>
               <div>
                 <Link
-                  href={'/login'}
+                  prefetch={true}
+                  href={`${OWNER_BASE_URL}/login` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={toggleLoginPopover}>
                   <p className={'text-sm'}>Login as Owner</p>
                   <span className={'text-xs text-balance'}>
@@ -103,13 +108,15 @@ export default function Navbar() {
               </div>
               <div>
                 <Link
-                  href={'/login'}
+                  prefetch={true}
+                  href={`${NURSE_BASE_URL}/login` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={toggleLoginPopover}>
                   <p className={'text-sm'}>Login as Nurse</p>
                   <span className={'text-xs text-balance'}>
@@ -131,13 +138,15 @@ export default function Navbar() {
             <PopoverContent className={'space-y-2 p-1'}>
               <div>
                 <Link
-                  href={'/sign-up'}
+                  prefetch={true}
+                  href={`${OWNER_BASE_URL}/sign-up` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={toggleSignUpPopover}>
                   <p className={'text-sm'}>Register as Owner</p>
                   <span className={'text-xs text-balance'}>
@@ -148,13 +157,15 @@ export default function Navbar() {
               </div>
               <div>
                 <Link
-                  href={'/sign-up'}
+                  prefetch={true}
+                  href={`${NURSE_BASE_URL}/sign-up` as Route}
                   className={buttonVariants({
                     variant: 'ghost',
                     size: 'sm',
                     className:
                       'rounded-sm! flex-col items-start h-fit! gap-1! py-1',
                   })}
+                  target='_blank'
                   onClick={toggleSignUpPopover}>
                   <p className={'text-sm'}>Register as Provider</p>
                   <span className={'text-xs text-balance'}>

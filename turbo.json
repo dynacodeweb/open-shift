@@ -31,7 +31,8 @@
         "!.next/cache/**"
       ],
       "env": [
-        "API_URL"
+        "API_URL",
+        "NODE_ENV"
       ]
     },
     "nurse#build": {
@@ -43,7 +44,9 @@
         "!.next/cache/**"
       ],
       "env": [
-        "API_URL"
+        "API_URL",
+        "NODE_ENV",
+        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN"
       ]
     },
     "owner#build": {
@@ -55,7 +58,9 @@
         "!.next/cache/**"
       ],
       "env": [
-        "API_URL"
+        "API_URL",
+        "NODE_ENV",
+        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN"
       ]
     },
     "frontend#build": {
@@ -70,10 +75,8 @@
         "API_URL",
         "NODE_ENV",
         "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
-        "NEXT_PUBLIC_OWNER_LOGIN_LINK",
-        "NEXT_PUBLIC_OWNER_SIGNUP_LINK",
-        "NEXT_PUBLIC_NURSE_LOGIN_LINK",
-        "NEXT_PUBLIC_NURSE_SIGNUP_LINK"
+        "NEXT_PUBLIC_OWNER_BASE_URL",
+        "NEXT_PUBLIC_NURSE_BASE_URL"
       ]
     },
     "backend#build": {
@@ -87,7 +90,8 @@
         "BETTER_AUTH_URL",
         "BETTER_AUTH_SECRET",
         "DATABASE_URL",
-        "PORT"
+        "PORT",
+        "ALLOWED_ORIGINS"
       ]
     },
     "lint": {
