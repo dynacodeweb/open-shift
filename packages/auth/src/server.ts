@@ -9,18 +9,44 @@ import {
   openAPI,
 } from 'better-auth/plugins';
 import { config } from 'dotenv';
-import { ac, admin, nurse, owner, user } from './utils/permissions.js';
+import { ac, admin, nurse, owner, user } from './lib/permissions.js';
 
 config({ path: '.env.local' });
 
 const isDev = process.env.NODE_ENV === 'development';
 
+// console.log(
+//   'Better Auth Configuration:',
+//   isDev ? 'Development.' : 'Production',
+// );
+
 export const auth = betterAuth({
   advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-      // domain: 'https://open-shift-backend.vercel.app',
-    },
+    // crossSubDomainCookies: {
+    //   enabled: true,
+    //   // domain: 'https://open-shift-backend.vercel.app',
+    //   // domain: isDev ? 'localhost' : 'vercel.app',
+    //   // domain: isDev ? '::1' : 'vercel.app',
+    //   // ...(!isDev && { domain: 'vercel.app' }),
+    //   // ...(isDev ? {} : { domain: 'vercel.app' }),
+    //   // ...(isDev
+    //   //   ? { domain: 'http://localhost:3003' }
+    //   //   : { domain: 'vercel.app' }),
+    //   domain: isDev ? '' : 'vercel.app',
+    // },
+    // crossSubDomainCookies: isDev
+    //   ? { enabled: true }
+    //   : {
+    //       enabled: true,
+    //       domain: 'vercel.app', // Prod: set domain for vercel subdomains
+    //     },
+    // ...(!isDev && {
+    //   crossSubDomainCookies: {
+    //     enabled: true,
+    //     domain: 'vercel.app', // Prod: set domain for vercel subdomains
+    //   },
+    // }),
+
     database: {
       generateId: 'uuid',
     },
@@ -166,6 +192,8 @@ export const auth = betterAuth({
     },
   },
 });
+
+// console.log('Better Auth Initialized', auth.options.advanced);
 
 export type Auth = ReturnType<typeof betterAuth>;
 // export const Session = Auth['$Infer']['Session'];

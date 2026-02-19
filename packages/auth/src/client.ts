@@ -4,8 +4,8 @@ import {
   lastLoginMethodClient,
 } from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
+import { ac, admin, nurse, owner, user } from './lib/permissions.js';
 import type { auth } from './server.js';
-import { ac, admin, nurse, owner, user } from './utils/permissions.js';
 
 export const authClient = createAuthClient({
   // baseURL: 'http://localhost:3000',

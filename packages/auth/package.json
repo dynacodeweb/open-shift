@@ -29,8 +29,12 @@
       "default": "./dist/client.js"
     },
     "./permissions": {
-      "types": "./dist/utils/permissions.d.ts",
-      "default": "./dist/utils/permissions.js"
+      "types": "./dist/lib/permissions.d.ts",
+      "default": "./dist/lib/permissions.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
     }
   }
 }
