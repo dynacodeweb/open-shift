@@ -14,5 +14,9 @@ export const requireAuth = cache(async () => {
     redirect('/login');
   }
 
+  if (session.user.role !== 'nurse') {
+    redirect('/login');
+  }
+
   return session;
 });
