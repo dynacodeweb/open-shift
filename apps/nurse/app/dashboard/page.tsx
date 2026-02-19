@@ -1,5 +1,14 @@
+import { ThemeModeToggler } from '@/components/shared/theme-toggler';
 import { requireAuth } from '@/lib/require-auth';
-import { IconCheckbox } from '@tabler/icons-react';
+import {
+  IconBriefcase2,
+  IconCalendarCheck,
+  IconClockCheck,
+  IconCurrencyDollarAustralian,
+  IconFileTypeDoc,
+  IconQuestionMark,
+  IconTrendingUp,
+} from '@tabler/icons-react';
 import { buttonVariants } from '@workspace/ui/components/button';
 import {
   Card,
@@ -10,228 +19,198 @@ import {
   CardHeader,
   CardTitle,
 } from '@workspace/ui/components/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@workspace/ui/components/carousel';
-import { SquareArrowOutUpRight } from 'lucide-react';
-import Image from 'next/image';
+import { Separator } from '@workspace/ui/components/separator';
 import Link from 'next/link';
 
 export default async function DashboardPage() {
-  await requireAuth();
+  const { user } = await requireAuth();
 
   return (
-    <Card className={'bg-transparent shadow-none p-0 border-0'}>
-      {/* SKEWED BUTTON EXAMPLES */}
-      {/* <div className='p-8 space-x-6'>
-        <div className='inline-block rotate-6 -skew-6 rounded-xs bg-indigo-500'>
-          <button className='-rotate-6 skew-6 rounded-xs px-6 py-2 text-white'>
-            Sign in
-          </button>
-        </div>
-
-        <button className='rotate-6 -skew-6 rounded-xs ring-1 ring-indigo-500 px-6 py-2 text-indigo-600'>
-          Sign in
-        </button>
-      </div> */}
-      <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4'}>
-        <Card className={'col-span-2 bg-transparent shadow-none p-0 border-0'}>
+    <Card className={'bg-transparent rounded-none border-none shadow-none'}>
+      <CardHeader>
+        <CardTitle>
+          <h2>Welcome back, {user.firstName}!</h2>
+        </CardTitle>
+        <CardDescription>
+          <p>
+            Here’s a quick overview of your dashboard. You can manage your
+            account, view your schedule, and check out the latest client reviews
+            all in one place.
+          </p>
+        </CardDescription>
+        <CardAction>
+          <ThemeModeToggler />
+        </CardAction>
+      </CardHeader>
+      <CardContent
+        className={'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'}>
+        <Card className={'gap-3'}>
           <CardHeader>
-            <CardTitle>
-              <h1 className={'text-4xl font-bold'}>Dashboard</h1>
-            </CardTitle>
-            <CardDescription>Welcome Mark</CardDescription>
             <CardDescription>
-              Let’s get you started to find jobs and build a network of clients
-              as soon as possible.
+              <p className={'font-semibold text-lg'}>Upcoming Shifts</p>
             </CardDescription>
-            <CardDescription>
-              First, we need to know a few things about you and go through some
-              checks to approve your account with Mable.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className={'space-y-6'}>
-            <CardAction className={'self-start justify-self-start'}>
-              <Link
-                href={'/dashboard/edit-profile'}
-                className={buttonVariants({ variant: 'default' })}>
-                Setup your account
-              </Link>
+            <CardAction className={'bg-primary/20 rounded-full p-1'}>
+              <IconCalendarCheck className={'size-6 stroke-primary'} />
             </CardAction>
-            {/* <Item variant='destructive'>
-              <ItemMedia variant={'destructive'}>
-                <AlertCircleIcon className='size-5' />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Open Service direct</ItemTitle>
-                <ItemDescription>
-                  Supplies you need direct to your home.
-                </ItemDescription>
-              </ItemContent>
-              <ItemActions>
+          </CardHeader>
+          <CardContent>
+            <h3 className={'text-xl font-medium'}>3</h3>
+          </CardContent>
+          <CardContent>
+            <CardDescription>
+              <p>Next 7 days</p>
+            </CardDescription>
+          </CardContent>
+        </Card>
+        <Card className={'gap-3'}>
+          <CardHeader>
+            <CardDescription>
+              <p className={'font-semibold text-lg'}>Hours This month</p>
+            </CardDescription>
+            <CardAction className={'bg-purple-500/20 rounded-full p-1'}>
+              <IconClockCheck className={'size-6 stroke-purple-400'} />
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <h3 className={'text-xl font-medium'}>64</h3>
+          </CardContent>
+          <CardContent>
+            <CardDescription>
+              <p>January 2026</p>
+            </CardDescription>
+          </CardContent>
+        </Card>
+        <Card className={'gap-3'}>
+          <CardHeader>
+            <CardDescription>
+              <p className={'font-semibold text-lg'}>Earnings</p>
+            </CardDescription>
+            <CardAction className={'bg-green-500/20 rounded-full p-1'}>
+              <IconCurrencyDollarAustralian
+                className={'size-6 stroke-green-400'}
+              />
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <h3 className={'text-xl font-medium'}>$2688</h3>
+          </CardContent>
+          <CardContent>
+            <CardDescription>
+              <p>This month</p>
+            </CardDescription>
+          </CardContent>
+        </Card>
+        <Card className={'gap-3'}>
+          <CardHeader>
+            <CardDescription>
+              <p className={'font-semibold text-lg'}>Completion Rate</p>
+            </CardDescription>
+            <CardAction className={'bg-destructive/20 rounded-full p-1'}>
+              <IconTrendingUp className={'size-6 stroke-destructive'} />
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <h3 className={'text-xl font-medium'}>98%</h3>
+          </CardContent>
+          <CardContent>
+            <CardDescription>
+              <p>Excellent!</p>
+            </CardDescription>
+          </CardContent>
+        </Card>
+      </CardContent>
+
+      <CardContent>
+        <div className={'grid grid-cols-1 lg:grid-cols-3 gap-6'}>
+          <div className={'col-span-full lg:col-span-2 space-y-6'}>
+            <Card className={'aspect-22/9'}>
+              <CardHeader>
+                <CardTitle>Upcoming Shifts</CardTitle>
+                <CardAction>
+                  <Link
+                    href={'#'}
+                    className={buttonVariants({
+                      size: 'sm',
+                      variant: 'link',
+                    })}>
+                    View All
+                  </Link>
+                </CardAction>
+              </CardHeader>
+              <Separator />
+              <CardContent>All your upcoming shifts,</CardContent>
+            </Card>
+            <Card className={'aspect-22/9'}>
+              <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+              </CardHeader>
+              <Separator />
+              <CardContent>All types of platform activity,</CardContent>
+            </Card>
+          </div>
+          <div className={'col-span-full lg:col-span-1 space-y-6'}>
+            <Card>
+              <CardHeader>
+                <CardTitle>Quick Actions</CardTitle>
+              </CardHeader>
+              <Separator />
+              <CardContent className={'flex flex-col gap-4'}>
                 <Link
                   href={'#'}
                   className={buttonVariants({
-                    variant: 'destructive',
                     size: 'sm',
+                    className: 'w-full justify-start',
                   })}>
-                  View
+                  <IconBriefcase2 className={'size-4'} />
+                  Browse Available Shifts
                 </Link>
-              </ItemActions>
-            </Item> */}
-          </CardContent>
-
-          <CardContent className={'mt-28'}>
-            <ClientReviews />
-            {/* <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
-              <div className='bg-muted/50 aspect-video rounded-xl' />
-              <div className='bg-muted/50 aspect-video rounded-xl' />
-              <div className='bg-muted/50 aspect-video rounded-xl' />
-            </div> */}
-          </CardContent>
-        </Card>
-        <Card className={'col-span-1 h-fit bg-destructive/10'}>
-          <CardHeader>
-            <CardTitle className={'text-2xl font-bold'}>
-              What you’ll need to set up your account
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className={'space-y-3 text-muted-foreground text-sm'}>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-4'} />
-                Your mobile number
-              </li>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-4'} />
-                NDIS Worker Screening Check
-              </li>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-4'} />
-                Australian Business Number (ABN)
-              </li>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-4'} />
-                Two professional references
-              </li>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-4'} />
-                COVID-19 vaccination as required by your state
-              </li>
-              <li className={'flex items-center gap-2'}>
-                <IconCheckbox className={'size-6'} />
-                Working with Children Check, if working with children and
-                teenagers under 18 years old
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      <CardFooter>
-        <CardDescription>
-          <small>
-            The Open Service collects your personal information for the purpose
-            of verifying you in accordance with the Verification Policy. See
-            <Link
-              href={'#'}
-              className={buttonVariants({
-                variant: 'link',
-                className: 'p-0! h-fit! text-[11px] mx-1 gap-1!',
-              })}>
-              Privacy Collection Notice and Policy
-              <SquareArrowOutUpRight className={'size-2.5'} />
-            </Link>
-            for more information. While we verify information in the manner set
-            out in our Verification Policy, clients or support workers may
-            provide you with other information about themselves which we do not
-            verify, such as in their profiles, messages or verbally. You can
-            request that your client or support worker provides you with
-            credentials or identifying documents when you first meet them.
-          </small>
-        </CardDescription>
-      </CardFooter>
-    </Card>
-  );
-}
-
-const clientReviews = [
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-  {
-    id: crypto.randomUUID(),
-    content:
-      '‘Biggest thing with Mable is that it provides flexibility. You’re able to tailor your hours whenever you need.’',
-    name: 'Jane Doe',
-    avatar: '/profile-dummy.png',
-  },
-];
-
-function ClientReviews() {
-  return (
-    <Carousel className='w-full'>
-      <CarouselContent>
-        {clientReviews.map((review) => (
-          <CarouselItem key={review.id} className='md:basis-1/2 lg:basis-1/3'>
-            <Card className={'gap-4'}>
-              <CardContent className='flex flex-col aspect-auto items-center justify-center'>
-                <CardDescription>{review.content}</CardDescription>
+                <Link
+                  href={'#'}
+                  className={buttonVariants({
+                    size: 'sm',
+                    className: 'w-full justify-start',
+                  })}>
+                  <IconFileTypeDoc className={'size-4'} />
+                  Update Documents
+                </Link>
+                <Link
+                  href={'#'}
+                  className={buttonVariants({
+                    size: 'sm',
+                    className: 'w-full justify-start',
+                  })}>
+                  <IconQuestionMark className={'size-4'} />
+                  Get Support
+                </Link>
               </CardContent>
-              <CardFooter className={'space-x-4'}>
-                <div className={'size-10'}>
-                  <Image
-                    src={review.avatar}
-                    alt={review.name}
-                    width={50}
-                    height={50}
-                    className={'w-full h-full object-cover rounded-full'}
-                  />
-                </div>
-                <strong>{review.name}</strong>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Refer a Nurse</CardTitle>
+                <CardDescription>
+                  <p>
+                    Earn $100 for every nurse you refer who completes their
+                    first shift with us. Share the love and help your friends
+                    find great nursing opportunities!
+                  </p>
+                </CardDescription>
+              </CardHeader>
+              <Separator />
+              <CardFooter>
+                <Link
+                  href={'#'}
+                  className={buttonVariants({
+                    size: 'sm',
+                    variant: 'secondary',
+                    className: 'w-full',
+                  })}>
+                  Start Referring
+                </Link>
               </CardFooter>
             </Card>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className={'-left-4'} />
-      <CarouselNext className={'-right-4'} />
-    </Carousel>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
