@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server';
 import { Scalar } from '@scalar/hono-api-reference';
-import { auth } from '@workspace/auth/server';
+import { auth, ServerSession } from '@workspace/auth/server';
 import { config } from 'dotenv';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -14,24 +14,30 @@ config({ path: '.env.local' });
 
 const app = new Hono<{
   Variables: {
-    user: typeof auth.$Infer.Session.user | null;
-    session: typeof auth.$Infer.Session.session | null;
+    user: ServerSession['user'] | null;
+    session: ServerSession['session'] | null;
   };
 }>();
 
 app.use(poweredBy());
 app.use(logger());
 
+const allowOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim())
+  : ['http://localhost:3001']; // default to localhost if not set
+
+console.log('Allowed origins:', allowOrigins);
+
 app.use(
   '/api/auth/*', // or replace with "*" to enable cors for all routes
   cors({
-    origin: 'http://localhost:3001', // replace with your origin
+    origin: allowOrigins,
     allowHeaders: ['Content-Type', 'Authorization'],
-    allowMethods: ['POST', 'GET', 'OPTIONS'],
+    allowMethods: ['POST', 'GET', 'PUT', 'DELETE'],
     exposeHeaders: ['Content-Length'],
     maxAge: 600,
     credentials: true,
-  })
+  }),
 );
 
 app.use('*', async (c, next) => {
@@ -73,7 +79,7 @@ app.get(
     ],
     isEditable: false,
     title: 'Backend API Reference',
-  })
+  }),
 );
 
 app.get('/session', (c) => {

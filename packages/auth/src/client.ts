@@ -1,6 +1,11 @@
-import { adminClient, lastLoginMethodClient } from 'better-auth/client/plugins';
+import {
+  adminClient,
+  inferAdditionalFields,
+  lastLoginMethodClient,
+} from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
-import { ac, admin, myCustomRole, user } from './utils/permissions.js';
+import type { auth } from './server.js';
+import { ac, admin, nurse, owner, user } from './utils/permissions.js';
 
 export const authClient = createAuthClient({
   // baseURL: 'http://localhost:3000',
@@ -8,12 +13,15 @@ export const authClient = createAuthClient({
   plugins: [
     adminClient({
       ac,
-      roles: { admin, user, myCustomRole },
+      roles: { admin, user, owner, nurse },
     }),
+    inferAdditionalFields<typeof auth>(),
     lastLoginMethodClient(),
   ],
 });
 
 // export type SignIn = ReturnType<(typeof authClient)['signIn']>;
 
-export const { signIn, signUp, useSession } = createAuthClient();
+export const { signIn, signUp, useSession, signOut } = authClient;
+
+export type ClientSession = (typeof authClient.$Infer)['Session'];

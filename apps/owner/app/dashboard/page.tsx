@@ -8,9 +8,12 @@ import {
   SidebarProvider,
 } from '@workspace/ui/components/sidebar';
 
+import { requireAuth } from '@/lib/require-auth';
 import data from '../data.json';
 
-export default function Page() {
+export default async function Page() {
+  await requireAuth();
+
   return (
     <SidebarProvider
       style={

@@ -1,3 +1,4 @@
+import { requireAuth } from '@/lib/require-auth';
 import { IconCheckbox } from '@tabler/icons-react';
 import { buttonVariants } from '@workspace/ui/components/button';
 import {
@@ -20,7 +21,9 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  await requireAuth();
+
   return (
     <Card className={'bg-transparent shadow-none p-0 border-0'}>
       {/* SKEWED BUTTON EXAMPLES */}
