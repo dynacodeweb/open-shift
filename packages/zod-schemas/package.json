@@ -32,6 +32,10 @@
     "./book-schemas": {
       "types": "./dist/schemas/book-schemas.d.ts",
       "default": "./dist/schemas/book-schemas.js"
+    },
+    "./constants": {
+      "types": "./dist/schemas/constants.d.ts",
+      "default": "./dist/schemas/constants.js"
     }
   },
   "files": [

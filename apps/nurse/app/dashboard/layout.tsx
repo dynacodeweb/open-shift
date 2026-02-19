@@ -1,3 +1,4 @@
+import Logout from '@/components/shared/logout';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@workspace/ui/components/breadcrumb';
-import { Button, buttonVariants } from '@workspace/ui/components/button';
+import { buttonVariants } from '@workspace/ui/components/button';
 import { Separator } from '@workspace/ui/components/separator';
 import {
   SidebarInset,
@@ -32,7 +33,7 @@ export default function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className='hidden md:block'>
-                  <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+                  <BreadcrumbLink href='/'>Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className='hidden md:block' />
                 <BreadcrumbItem>
@@ -60,9 +61,7 @@ export default function DashboardLayout({
               Help center
             </Link>
 
-            <Button variant='skewed' size='sm' className='rounded-xs!'>
-              Logout
-            </Button>
+            <Logout />
           </div>
         </header>
         <div className='flex flex-1 flex-col gap-4 p-4'>{children}</div>

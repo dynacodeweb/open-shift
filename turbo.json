@@ -46,7 +46,10 @@
       "env": [
         "API_URL",
         "NODE_ENV",
-        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN"
+        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
+        "DATABASE_URL",
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET"
       ]
     },
     "owner#build": {

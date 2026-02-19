@@ -1,13 +1,13 @@
 import { Hono } from 'hono';
 
 import { zValidator } from '@hono/zod-validator';
-import { auth } from '@workspace/auth/server';
+import { auth, ServerSession } from '@workspace/auth/server';
 import { bookSchema } from '@workspace/zod-schemas/book-schemas';
 
 const book = new Hono<{
   Variables: {
-    user: typeof auth.$Infer.Session.user | null;
-    session: typeof auth.$Infer.Session.session | null;
+    user: ServerSession['user'] | null;
+    session: ServerSession['session'] | null;
   };
 }>().basePath('/books');
 
@@ -78,7 +78,7 @@ book.get('/', async (c) => {
         status: 'error',
         message: 'You must be logged in to access this resource.',
       },
-      401
+      401,
     );
 
   return c.json(books);
@@ -95,7 +95,7 @@ book.post('/new', zValidator('json', bookSchema), (c) => {
         status: 'error',
         message: 'You must be logged in to access this resource.',
       },
-      401
+      401,
     );
 
   const validated = c.req.valid('json');

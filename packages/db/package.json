@@ -9,10 +9,11 @@
     "db:generate": "pnpm exec drizzle-kit generate",
     "db:migrate:up": "pnpm exec drizzle-kit migrate",
     "db:push": "pnpm exec drizzle-kit push",
-    "db:studio": "npx drizzle-kit studio"
+    "db:studio": "pnpm exec drizzle-kit studio"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.0.2",
+    "@workspace/zod-schemas": "workspace:*",
     "dotenv": "17.2.3",
     "drizzle-orm": "^0.45.1",
     "drizzle-zod": "0.8.3",
@@ -32,6 +33,14 @@
     "./auth-types": {
       "types": "./dist/auth-types/index.d.ts",
       "default": "./dist/auth-types/index.js"
+    },
+    "./schema": {
+      "types": "./dist/auth-db/schema.d.ts",
+      "default": "./dist/auth-db/schema.js"
+    },
+    "./schema-types": {
+      "types": "./dist/auth-db/schema-types.d.ts",
+      "default": "./dist/auth-db/schema-types.js"
     }
   }
 }

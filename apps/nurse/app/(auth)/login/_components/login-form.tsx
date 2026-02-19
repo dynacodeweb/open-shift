@@ -12,6 +12,7 @@ import {
   useForm,
 } from 'react-hook-form';
 
+import { signIn } from '@workspace/auth/client';
 import { Button } from '@workspace/ui/components/button';
 import {
   Card,
@@ -52,7 +53,7 @@ export default function LoginForm() {
   });
 
   const onError: SubmitErrorHandler<LoginValues> = (errors) => {
-    console.log('validation errors', errors);
+    // console.log('validation errors', errors);
     Object.values(errors).forEach((error) => {
       toast.error(error.message, {
         id: `validation-error-${error.message}`,
@@ -69,13 +70,18 @@ export default function LoginForm() {
         success: 'Successfully logged in!',
         error: 'Failed to log in.',
       });
+      await signIn.email({
+        email: data.email,
+        password: data.password,
+        rememberMe: data.rememberMe,
+      });
       setTimeout(() => {
         router.push('/dashboard');
-        toast.success(
-          <pre className={'text-left text-xs overflow-x-scroll'}>
-            {JSON.stringify(data, null, 2)}
-          </pre>,
-        );
+        // toast.success(
+        //   <pre className={'text-left text-xs overflow-x-scroll'}>
+        //     {JSON.stringify(data, null, 2)}
+        //   </pre>,
+        // );
       }, 250);
     });
   };

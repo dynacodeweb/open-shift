@@ -14,6 +14,7 @@ import {
   RegistrationContextProvider,
   useRegistrationContext,
 } from '@/contexts/registration-context';
+import { signUp } from '@workspace/auth/client';
 import { Card } from '@workspace/ui/components/card';
 import { toast } from '@workspace/ui/components/sonner';
 import { registerSchema, RegisterValues } from '@workspace/zod-schemas';
@@ -75,23 +76,65 @@ function SignUpFormFields() {
     });
   };
 
-  const onSubmit: SubmitHandler<RegisterValues> = (data) => {
-    if (isDev) console.log('validated data', data);
+  const onSubmit: SubmitHandler<RegisterValues> = (values) => {
+    if (isDev) console.log('validated data', values);
+    // startSignUpTransition(async () => {
+    //   await sleep(2000); // simulate API call
+    //   toast.promise(sleep(300), {
+    //     loading: 'Creating your account...',
+    //     success: 'Account created successfully!',
+    //     error: 'Error creating account. Please try again.',
+    //   });
+    //   setTimeout(() => {
+    //     router.push('/onboarding');
+    //     toast.success(
+    //       <pre className={'text-left text-xs overflow-x-scroll'}>
+    //         {JSON.stringify(data, null, 2)}
+    //       </pre>,
+    //     );
+    //   }, 250);
+    // });
+
     startSignUpTransition(async () => {
-      await sleep(2000); // simulate API call
-      toast.promise(sleep(300), {
-        loading: 'Creating your account...',
-        success: 'Account created successfully!',
-        error: 'Error creating account. Please try again.',
-      });
-      setTimeout(() => {
-        router.push('/onboarding');
-        toast.success(
-          <pre className={'text-left text-xs overflow-x-scroll'}>
-            {JSON.stringify(data, null, 2)}
-          </pre>,
+      try {
+        const { data, error } = await signUp.email({
+          name: `${values.firstName} ${values.lastName}`,
+          email: values.email,
+          password: values.password,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          mobileNumber: values.mobileNumber,
+          provideService: values.provideService,
+          address: {
+            'address-line1': values['address-line1'],
+            'address-line2': values['address-line2'],
+            city: values.city,
+            state: values.state,
+            'postal-code': values['postal-code'],
+          },
+          weeklyWorkingHours: values.weeklyWorkingHours,
+          willingToStartWorking: values.willingToStartWorking,
+          isTermsAndConditionAccepted: values.isTermsAndConditionAccepted,
+        });
+        if (!error) {
+          toast.success('Account created successfully!', {
+            id: `sign-up-success-${data.user.id}`,
+          });
+          form.reset();
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error('signup error', error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Error creating account. Please try again.',
+          {
+            id: `sign-up-error-${error instanceof Error ? error.message : 'unknown-error'}`,
+          },
         );
-      }, 250);
+        return;
+      }
     });
   };
 

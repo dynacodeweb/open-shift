@@ -60,7 +60,7 @@ export default function RenderFormsFooter() {
       if (result.type === 'nochange') {
         // user kept their original address
         // submitForm(); // your submit logic
-        console.log('result nochange', result);
+        if (isDev) console.log('result nochange', result);
         nextStep(4);
         onAddressValidation(true);
         return;
@@ -86,7 +86,7 @@ export default function RenderFormsFooter() {
 
       if (result.type === 'cancel') {
         // user closed the dialog; do nothing or show a message
-        console.log('result cancel', result);
+        if (isDev) console.log('result cancel', result);
         toast.info('Address confirmation cancelled', {
           id: 'address-confirmation-cancelled',
         });

@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   //     },
   //   ];
   // },
+  serverExternalPackages: ['pg'],
   async rewrites() {
     return {
       beforeFiles: [

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@workspace/db": "workspace:*",
+    "@workspace/zod-schemas": "workspace:*",
     "better-auth": "1.4.10",
     "dotenv": "17.2.3",
     "server-only": "0.0.1"
